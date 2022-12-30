@@ -22,7 +22,7 @@ const register = mongoose.Schema({
   address:{
     type:String,
   },
-  number :{
+  number :{   
     type:Number
   },
   profile_url :{
