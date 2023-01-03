@@ -19,10 +19,6 @@ export default function Listmodel(props) {
   const dispatch = useDispatch();
   const { email, openlistModel, handleListModel } = props;
   const { userSubList, isLoading, error } = useSelector(userSubListSelector);
-
-  // console.log("userSubList", userSubList?.data?.data);
-  // console.log("email", email);
-
   useEffect(() => {
     email && dispatch(userSubListApi(email));
   }, [email]);
@@ -33,7 +29,10 @@ export default function Listmodel(props) {
   return (
     <div>
       <Dialog open={openlistModel} onClose={handleListModel}>
-        <DialogTitle> {userName}'s Task list ({count})</DialogTitle>
+        <DialogTitle>
+          {" "}
+          {userName}'s Task list ({count})
+        </DialogTitle>
         <DialogContent>
           {list?.length >= 1 ? (
             <DialogContentText>
@@ -43,11 +42,14 @@ export default function Listmodel(props) {
                     <TableCell>S/N</TableCell>
                     <TableCell>TaskTitle </TableCell>
                     <TableCell>Task Status</TableCell>
-                     <TableCell>Created On</TableCell>
-                   </TableRow>
+                    <TableCell>Created On</TableCell>
+                    <TableCell>Updated On</TableCell>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
                   {list?.map((val, index) => {
+                    let createdDate = parseDate(val.createdAt);
+                    let updatedDate = parseDate(val.updatedOn);
                     return (
                       <TableRow
                         key={index}
@@ -58,7 +60,10 @@ export default function Listmodel(props) {
                         <TableCell scope="row">{index + 1}</TableCell>
                         <TableCell scope="row">{val.name}</TableCell>
                         <TableCell>{val.age}</TableCell>
-                        <TableCell>{parseDate(val.createdAt)}</TableCell>
+                        <TableCell>{createdDate}</TableCell>
+                        <TableCell>
+                          {val.updatedOn ? updatedDate : createdDate}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -66,9 +71,7 @@ export default function Listmodel(props) {
               </Table>
             </DialogContentText>
           ) : (
-            <DialogContentText>
-              No users found /yet to Add .
-            </DialogContentText>
+            <DialogContentText>No users found /yet to Add .</DialogContentText>
           )}
         </DialogContent>
         <DialogActions>

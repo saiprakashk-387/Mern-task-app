@@ -35,12 +35,14 @@ export default function UserEdit(props) {
     setData(user);
   };
   const updateUser = () => {
+    let date = new Date().toISOString();
     let dataa = {
       name: data?.name,
       age: data?.age,
+      updatedOn:date,
     };
     let id = data?._id;
-    dispatch(singleUSerUpdate(id, dataa));
+     dispatch(singleUSerUpdate(id, dataa));
   };
   return (
     <div>

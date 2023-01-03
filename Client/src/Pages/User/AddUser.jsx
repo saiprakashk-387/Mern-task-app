@@ -22,8 +22,7 @@ export default function AddUser(props) {
   const { closeModel, model } = props;
   const [data, setData] = useState({ name: "", age: "" });
   const { adduser, isLoading, error } = useSelector(addUserSelector);
-console.log("adduser",adduser);
-  useEffect(() => {
+   useEffect(() => {
     if (adduser?.status === 200) {
       closeModel();
       dispatch(AllUsersList());

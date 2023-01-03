@@ -44,7 +44,7 @@ export default function Dashboard() {
   return (
     <>
       <TableContainer component={Paper}>
-        <Typography sx={{ color: "#10e09a" }}>All Users</Typography>
+        <Typography sx={{ color: "#10e09a" }}>All Members</Typography>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "gainsboro" }}>
             <TableRow>
@@ -74,8 +74,7 @@ export default function Dashboard() {
                   <TableCell>
                     {!val.address ? "Update Profile" : val.address}
                   </TableCell>
-                  {/* <TableCell><img src={val?.profile_url} alt='' width={50} height={50} border='1px'/></TableCell> */}
-                  <TableCell>{val.role}</TableCell>
+                   <TableCell>{val.role}</TableCell>
                   <TableCell>{parseDate(val.createdAt)}</TableCell>
                   {val.role === "admin" ? (
                     <TableCell>

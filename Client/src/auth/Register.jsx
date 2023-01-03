@@ -21,34 +21,33 @@ export default function Register() {
       name: "",
       email: "",
       password: "",
+      number:"",
       confirmPassword: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       email: yup.string().email().required("Email is required"),
-      password: yup.string().required("Password is required"),
-      // .matches(
-      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-      // )
+      password: yup.string().required("Password is required"), 
+       number: yup
+      .string()
+      .required("Mobile Number is required")
+      .min(10, "should be 10 digits")
+      .max(10, "10 digits required"),
       confirmPassword: yup
         .string()
         .required("Confirm Password must be required")
         .oneOf([yup.ref("password"), null], "Password not match"),
     }),
     onSubmit: async (data) => {
-      // setLoading(true);
       let value = {
         name: data.name,
         email: data.email,
         password: data.password,
+        number:data.number,
         role: "user",
       };
-      console.log("value", value);
+      // console.log("value", value);
       await registerAPI(value, navigate);
-      // if (createMemberShip?.data?.status === 200) {
-      //   setLoading(false);
-      // }
     },
   });
   const toggleSecureEntry = () => {
@@ -104,6 +103,17 @@ export default function Register() {
             helperText={formik.touched.email ? formik.errors.email : null}
             error={formik.touched.email ? formik.errors.email : null}
           />
+           <TextField
+              sx={formStyle}
+              type="number"
+              name="number"
+              InputProps={{ inputProps: { min: 0 } }}
+              placeholder="Mobile Number"
+              value={formik.values.number}
+              onChange={formik.handleChange}
+              helperText={formik.touched.number ? formik.errors.number : null}
+              error={formik.touched.number ? formik.errors.number : null}
+            />
           <OutlinedInput
             name="password"
             sx={formStyle}
@@ -164,17 +174,7 @@ export default function Register() {
             Login
           </Link>
         </Typography>
-        {/* {loading ? (
-                <LoadingButton
-                  color="primary"
-                  loading
-                  fullWidth
-                  size="large"
-                  loadingPosition="start"
-                  sx={{ color: "blue", width: "50%", borderRadius: "15px" }}
-                  variant="contained"
-                >{``}</LoadingButton>
-              ) : ( */}
+
         <Button
           variant="contained"
           sx={{ width: "35%", borderRadius: "15px" }}

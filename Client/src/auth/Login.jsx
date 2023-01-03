@@ -18,7 +18,7 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-
+  // test@yopmail.com  admin@yopmail.com   123456
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,17 +27,9 @@ export default function Login() {
     validationSchema: yup.object({
       email: yup.string().email().required("Email is required"),
       password: yup.string().required("Password is required"),
-      // .matches(
-      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-      // )
     }),
     onSubmit: async (data) => {
-      // setLoading(true);
       await dispatch(loginAPI(data, navigate));
-      // if (createMemberShip?.data?.status === 200) {
-      //   setLoading(false);
-      // }
     },
   });
   const toggleSecureEntry = () => {
@@ -66,7 +58,7 @@ export default function Login() {
         <Typography variant="h4" gutterBottom>
           Welcome Back
         </Typography>
-        <form style={{ width: "40%", display: "grid", margin: "auto" }}>
+        <form style={{ width: "35%", display: "grid", margin: "auto" }}>
           <TextField
             required
             sx={formStyle}
@@ -103,6 +95,12 @@ export default function Login() {
           </FormHelperText>
         </form>
         <Typography>
+          {""}
+          <Link to="/login" underline="hover">
+            Login With OTP
+          </Link>
+        </Typography>
+        <Typography>
           {" "}
           Not registered yet? {""}
           <Link to="/register" underline="hover">
@@ -111,7 +109,7 @@ export default function Login() {
         </Typography>
         <Button
           variant="contained"
-          sx={{ width: "35%", borderRadius: "15px" }}
+          sx={{ width: "30%", borderRadius: "15px" }}
           onClick={formik.handleSubmit}
         >
           Login

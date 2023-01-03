@@ -37,7 +37,7 @@ export default function UserDelete(props) {
         keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{`Delete User  `}</DialogTitle>
+        <DialogTitle>{`Delete Task `}</DialogTitle>
         <DialogContent>
           '''''''''''''' Delete {deleteID?.name} ?''''''''''
         </DialogContent>

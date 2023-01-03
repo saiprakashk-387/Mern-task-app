@@ -1,204 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import PropTypes from "prop-types";
-// import AppBar from "@mui/material/AppBar";
-// import Box from "@mui/material/Box";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import Drawer from "@mui/material/Drawer";
-// import List from "@mui/material/List";
-// import ListItem from "@mui/material/ListItem";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemText from "@mui/material/ListItemText";
-// import MenuIcon from "@mui/icons-material/Menu";
-// import Toolbar from "@mui/material/Toolbar";
-// import Typography from "@mui/material/Typography";
-// import { Link, Outlet, useNavigate } from "react-router-dom";
-// import { Button } from "@mui/material";
-
-// const drawerWidth = 240;
-
-// function Layout(props) {
-//   const navigate = useNavigate();
-//   const { window } = props;
-//   const [mobileOpen, setMobileOpen] = useState(false);
-//   const [role, setRole] = useState();
-//   const [info, setInfo] = useState();
-
-//   const handleDrawerToggle = () => {
-//     setMobileOpen(!mobileOpen);
-//   };
-//   useEffect(() => {
-//     setRole(sessionStorage.getItem("role"));
-//     setInfo(JSON.parse(sessionStorage.getItem("userdata")));
-//   }, []);
-//   const list = [
-//     {
-//       name: "Home-admin",
-//       path: "/admindashboard",
-//     },
-//     {
-//       name: "Profile",
-//       path: "/profile",
-//     },
-//   ];
-//   const userList = [
-//     {
-//       name: "Dashboard-user",
-//       path: "/home",
-//     },
-//     {
-//       name: "About",
-//       path: "/about",
-//     },
-//     {
-//       name: "Profile",
-//       path: "/myprofile",
-//     },
-//   ];
-//   const getRoute = (text) => {
-//     navigate(text.path);
-//   };
-//   const drawer = (
-//     <div>
-//       <Toolbar />
-//       <List>
-//         {role === "admin"
-//           ? list.map((text, index) => (
-//               <ListItem
-//                 key={index}
-//                 disablePadding
-//                 onClick={() => {
-//                   getRoute(text);
-//                 }}
-//               >
-//                 <ListItemButton>
-//                   <ListItemText primary={text.name} />
-//                 </ListItemButton>
-//               </ListItem>
-//             ))
-//           : userList.map((text, index) => (
-//               <ListItem
-//                 key={index}
-//                 disablePadding
-//                 onClick={() => {
-//                   getRoute(text);
-//                 }}
-//               >
-//                 <ListItemButton>
-//                   <ListItemText primary={text.name} />
-//                 </ListItemButton>
-//               </ListItem>
-//             ))}
-//       </List>
-//     </div>
-//   );
-
-//   const container =
-//     window !== undefined ? () => window().document.body : undefined;
-
-//   const sessionOut = () => {
-//     sessionStorage.clear();
-//     navigate("/");
-//   };
-
-//   // const splitUserName = info?.email;
-//   // const userName = splitUserName?.toString().split("@", 1);
-//   const userName = info?.name;
-//   return (
-//     <Box sx={{ display: "flex" }}>
-//       <CssBaseline />
-//       <AppBar
-//         position="fixed"
-//         sx={{
-//           // width: { sm: `calc(100% - ${drawerWidth}px)` },
-//           ml: { sm: `${drawerWidth}px` },
-//         }}
-//       >
-//         <Toolbar sx={{ justifyContent: "space-around" }}>
-//           <Typography variant="h6" noWrap component="div"
-//           >
-//             Welcome {""}
-//             <Link
-//               to={`/profile`}
-//               state={role}
-//               sx={{ color: "cornsilk" }}
-//             >
-//               {userName}
-//             </Link>
-//           </Typography>
-//           <Typography variant="h6" noWrap component="div">
-//             MERN
-//           </Typography>
-//           <Button onClick={sessionOut} sx={{ color: "aliceblue" }}>
-//             Logout
-//           </Button>
-//         </Toolbar>
-//       </AppBar>
-//       <Box
-//         component="nav"
-//         sx={{
-//           width: { sm: drawerWidth },
-//           flexShrink: { sm: 0 },
-//           backgroundColor: "#1976d2",
-//           color: "aliceblue",
-//         }}
-//         aria-label="mailbox folders"
-//       >
-//         <Drawer
-//           container={container}
-//           variant="temporary"
-//           open={mobileOpen}
-//           onClose={handleDrawerToggle}
-//           ModalProps={{
-//             keepMounted: true, // open  on mobile.
-//           }}
-//           sx={{
-//             display: { xs: "block", sm: "none" },
-//             "& .MuiDrawer-paper": {
-//               boxSizing: "border-box",
-//               width: drawerWidth,
-//               backgroundColor: "#1976d2",
-//               color: "aliceblue",
-//             },
-//           }}
-//         >
-//           {drawer}
-//         </Drawer>
-//         <Drawer
-//           variant="permanent"
-//           sx={{
-//             display: { xs: "none", sm: "block" },
-//             "& .MuiDrawer-paper": {
-//               boxSizing: "border-box",
-//               width: drawerWidth,
-//             },
-//           }}
-//           open
-//         >
-//           {drawer}
-//         </Drawer>
-//       </Box>
-//       <Box
-//         component="main"
-//         sx={{
-//           flexGrow: 1,
-//           p: 3,
-//           width: { sm: `calc(100% - ${drawerWidth}px)` },
-//         }}
-//       >
-//         <Toolbar />
-//         <Outlet />
-//       </Box>
-//     </Box>
-//   );
-// }
-
-// Layout.propTypes = {
-//   window: PropTypes.func,
-// };
-
-// export default Layout;
-
-///toggle drawer//
 import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -261,7 +60,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
@@ -270,13 +68,9 @@ export default function Layout() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  // const [mobileOpen, setMobileOpen] = useState(false);
   const [role, setRole] = useState();
   const [info, setInfo] = useState();
 
-  // const handleDrawerToggle = () => {
-  //   setMobileOpen(!mobileOpen);
-  // };
   useEffect(() => {
     setRole(sessionStorage.getItem("role"));
     setInfo(JSON.parse(sessionStorage.getItem("userdata")));
@@ -294,12 +88,16 @@ export default function Layout() {
     navigate("/");
   };
 
+  const getUserName = (val) => {
+    let newVal = val?.charAt(0).toUpperCase() + val?.slice(1).toLowerCase();
+    return newVal;
+  };
   // const splitUserName = info?.email;
   // const userName = splitUserName?.toString().split("@", 1);
-  const userName = info?.name;
+  // const userName = info?.name;
   const list = [
     {
-      name: "Home-admin",
+      name: "Dashboard-admin",
       path: "/admindashboard",
     },
     {
@@ -338,22 +136,31 @@ export default function Layout() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <>
-          <Box> */}
-            <Typography variant="h6" noWrap component="div" sx={{marginInline:"100px"}}>
-              Welcome {""}
-              <Link to={`/profile`} state={role} sx={{ color: "cornsilk" }}>
-                {userName}
-              </Link>
-            </Typography>
-            <Typography variant="h6" noWrap component="div" sx={{margin:"auto"}}>
-              MERN
-            </Typography>
-            <Button onClick={sessionOut} sx={{ color: "aliceblue" ,margin:"auto"}}>
-              Logout
-            </Button>
-            {/* </Box>
-          </> */}
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ marginInline: "100px" }}
+          >
+            Welcome {""}
+            <Link to={`/profile`} state={role} sx={{ color: "cornsilk" }}>
+              {getUserName(info?.name)}
+            </Link>
+          </Typography>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ margin: "auto" }}
+          >
+            MERN
+          </Typography>
+          <Button
+            onClick={sessionOut}
+            sx={{ color: "aliceblue", margin: "auto" }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -409,7 +216,6 @@ export default function Layout() {
                 </ListItem>
               ))}
         </List>
-        {/* <Divider /> */}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

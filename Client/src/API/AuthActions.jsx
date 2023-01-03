@@ -37,3 +37,34 @@ export const loginAPI = (values, navigate) => {
       });
   };
 };
+
+export const getOtpApi = async (values) => {
+  await axios
+    .post(base_url + "/sendotp", values)
+    .then((res) => {
+      if (res.status === 200) {
+        sessionStorage.setItem("number", JSON.stringify(values));
+        alert(res.data.message);
+      }
+    })
+    .catch((err) => {
+      // console.log("err",err.response.data.message);
+      alert(err.response.data.message);
+    });
+};
+export const loginWithOtpApi = async (val, navigate) => {
+  await axios
+    .post(base_url + "/verifyotp", val)
+    .then((res) => {
+      if (res.status === 200) {
+        alert(res?.data?.message);
+        sessionStorage.setItem("userdata", JSON.stringify(res?.data?.data));
+        sessionStorage.setItem("token", res?.data?.token);
+        navigate("/home");
+        sessionStorage.removeItem("number");
+      }
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
+};

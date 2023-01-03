@@ -15,9 +15,9 @@ import AddUser from "./AddUser";
 import UserDelete from "./UserDelete";
 import { Box } from "@mui/system";
 import { parseDate } from "../../Constants";
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 export default function UserDashboard() {
   const dispatch = useDispatch();
@@ -61,20 +61,21 @@ export default function UserDashboard() {
   return (
     <>
       <TableContainer component={Paper}>
+        <Typography sx={{ color: "#10e09a" }}></Typography>
         {allPresons?.length >= 1 ? (
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ backgroundColor: "gainsboro" }}>
               <TableRow>
                 <TableCell>S/N</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Age</TableCell>
-                <TableCell>Created By</TableCell>
+                <TableCell>Status</TableCell>
                 <TableCell>Created On</TableCell>
+                <TableCell>Updated On</TableCell>
                 <TableCell>
                   Actions{" "}
                   <span>
                     <Button varient="outlined" onClick={addUser}>
-                      Add <AddBoxOutlinedIcon/>
+                      Add <AddBoxOutlinedIcon />
                     </Button>
                   </span>
                 </TableCell>
@@ -82,8 +83,11 @@ export default function UserDashboard() {
             </TableHead>
 
             <TableBody>
-              {allPresons
-                ?.map((val, index) => {
+              {
+                allPresons?.map((val, index) => {
+                  let createdDate = parseDate(val.createdAt);
+                  let updatedDate = parseDate(val.updatedOn);
+                  console.log("val.updatedOn", val.updatedOn);
                   return (
                     <TableRow
                       key={index}
@@ -92,29 +96,31 @@ export default function UserDashboard() {
                       <TableCell scope="row">{index + 1}</TableCell>
                       <TableCell scope="row">{val.name}</TableCell>
                       <TableCell>{val.age}</TableCell>
-                      <TableCell>{val.createdBy}</TableCell>
-                      <TableCell>{parseDate(val.createdAt)}</TableCell>
+                      <TableCell>{createdDate}</TableCell>
+                      <TableCell>
+                        {val.updatedOn ? updatedDate : createdDate}
+                      </TableCell>
                       <TableCell>
                         <Button
                           onClick={() => {
                             editUserDetils(val);
                           }}
                         >
-                           <BorderColorOutlinedIcon/>
+                          <BorderColorOutlinedIcon />
                         </Button>
                         <Button
                           onClick={() => {
                             userDeleteDetils(val);
                           }}
                         >
-                           <DeleteOutlinedIcon color="red"/>
+                          <DeleteOutlinedIcon color="red" />
                         </Button>
                       </TableCell>
                     </TableRow>
                   );
                 })
                 // .reverse()
-                }
+              }
             </TableBody>
           </Table>
         ) : (
