@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginAction, UserLoginAction } from "../Redux/Slice";
+import {  UserLoginAction } from "../Redux/Slice";
 import { base_url } from "./Config";
 
 export const registerAPI = (values, navigate) => {

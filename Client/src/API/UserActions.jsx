@@ -11,8 +11,7 @@ import { ACCESS_TOKEN, base_url } from "./Config";
 export const AllUsersList = () => {
   return (dispatch) => {
     axios
-      .get(base_url + "/persons", {
-        // headers: { auth: `${ACCESS_TOKEN()}` },
+      .get(base_url + "/persons", { 
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS_TOKEN()
@@ -32,8 +31,7 @@ export const AllUsersList = () => {
 export const CreateUser = (data) => {
   return (dispatch) => {
     axios
-      .post(base_url + "/createperson", data, {
-        // headers: { auth: `${ACCESS_TOKEN()}` },
+      .post(base_url + "/createperson", data, { 
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS_TOKEN()
@@ -52,8 +50,7 @@ export const CreateUser = (data) => {
 export const singleUSerUpdate = (id, dataa) => {
   return (dispatch) => {
     axios
-      .put(base_url + `/updateperson/${id}`, dataa, {
-        // headers: { auth: `${ACCESS_TOKEN()}` },
+      .put(base_url + `/updateperson/${id}`, dataa, { 
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS_TOKEN()
@@ -73,8 +70,7 @@ export const singleUSerUpdate = (id, dataa) => {
 export const deleteUserAPI = (id) => {
   return (dispatch) => {
     axios
-      .delete(base_url + `/deletepersons/${id}`, {
-        // headers: { auth: `${ACCESS_TOKEN()}` },
+      .delete(base_url + `/deletepersons/${id}`, { 
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS_TOKEN()

@@ -24,7 +24,11 @@ const register = mongoose.Schema({
   },
   number :{   
     type:Number
-  },
+      },
+  otp:{
+    type:String,
+    require:false
+},
   profile_url :{
     type:String 
    },

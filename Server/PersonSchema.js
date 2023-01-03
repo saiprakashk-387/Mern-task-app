@@ -22,6 +22,9 @@ const PersonSchema = mongoose.Schema({
     createdBy:{
         type : String,
         ref: "register"
+    },
+    updatedOn:{
+        type:String,
     }
 },{timestamps:true})
 module.exports = mongoose.model('persons',PersonSchema)

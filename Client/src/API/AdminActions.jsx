@@ -6,16 +6,14 @@ import {
   profileImageAction,
   profileUpdateAction,
   UserSubListAction,
-} from "../Redux/Slice";
-import { api_auth, Resourse_Url } from "./API_Configs";
+} from "../Redux/Slice"; 
 import { ACCESS_TOKEN, base_url } from "./Config";
 import { AllUsersList } from "./UserActions";
 
 export const adminUsersList = () => {
   return (dispatch) => {
     axios
-      .get(base_url + "/allusers", {
-        // headers: {'auth':`${ACCESS_TOKEN()}`}
+      .get(base_url + "/allusers", { 
         headers: {
           "Content-Type": "application/json",
           Authorization: ACCESS_TOKEN()
@@ -30,15 +28,7 @@ export const adminUsersList = () => {
         console.log("err", err);
       });
   };
-};
-// export const adminUsersListtt= ( accessToken) => {
-//       const response =  api_auth.getApiwithAuth(
-//         Resourse_Url.getAdminData(),
-//         accessToken,
-//       );
-//       console.log("Resourse_Url",Resourse_Url);
-//       console.log("response.data",response);
-// }
+}; 
 export const deleteUserByAdmin = (userId) => {
   return (dispatch) => {
     axios
@@ -67,8 +57,7 @@ export const getProfileInfo=(_id)=>{
         Authorization : ACCESS_TOKEN()?`Bearer ${ACCESS_TOKEN()}`:undefined
       }
     }).then((res)=>{
-      dispatch( myProfileAction(res.data.data))
-      // console.log('resss',res.data.data);
+      dispatch( myProfileAction(res.data.data)) 
     }).catch((err)=>{
       console.log('err',err);
     })

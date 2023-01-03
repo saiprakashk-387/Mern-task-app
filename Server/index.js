@@ -30,14 +30,13 @@ var corsOptions = {
 }
 
 const port = process.env.PORT || 2000;
-//third party middleware///
-// app.use(morgan("dev"));
-///post api
+ 
 app.use(require("./PersonsRoute"));
-app.use(require("./Routes/RegisterRoute"))
-app.use(require('./Routes/LoginRoute'))
-//to use .env file need dotenv package//
-////connect mongodb
+app.use(require("./Routes/RegisterRoute"));
+app.use(require('./Routes/LoginRoute'));
+app.use(require('./Routes/OtpRoute'));
+
+ 
 const url =process.env.CONNECTION_URL;
 
 mongoose.connect(url, {
@@ -52,21 +51,12 @@ mongoose.connection.on("connected", (err) => {
   }
 });
 
-///local host port
+ 
 app.listen(port, () => {
   console.log("server started on 2000");
 });
 
-//routyer
-// const Personrouter = require('./PersonsRoute')
-// app.use('/persons',Personrouter)
 
-///get- print s=msg in ui
-// app.get("/", (req, res) => {
-//   res.send("Express.Js");
-// });
-
-///get api
 app.get("/", (req, res) => {
   res.json("Express.Js");
 });
