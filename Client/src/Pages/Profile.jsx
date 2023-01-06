@@ -49,8 +49,8 @@ export default function Profile() {
     }
   }, []);
 
-  console.log("profileInfo", profileInfo);
-  console.log("myProfile", myProfile);
+  // console.log("profileInfo", profileInfo);
+  // console.log("myProfile", myProfile);
   useEffect(() => {
     if (profileUpdate.status === 200) {
       setStatus(sessionStorage.getItem("profileStatus"));

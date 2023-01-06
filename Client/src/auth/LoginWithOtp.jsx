@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Card, Typography } from "@mui/material";
-import { getOtpApi, loginAPI, loginWithOtpApi } from "../API/AuthActions";
+import { getOtpApi, loginWithOtpApi } from "../API/AuthActions";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import IconButton from "@mui/material/IconButton";
@@ -13,12 +13,20 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormHelperText from "@mui/material/FormHelperText";
+import { userLoginOtpSelector } from "../Redux/Slice";
 
 export default function LoginWithOtp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const { getLoginOtp, isLoading, error } = useSelector(userLoginOtpSelector);
+   useEffect(() => {
+    if (getLoginOtp?.status === 200) {
+      setLoading(true);
+    }
+  }, [getLoginOtp]);
+
   const formik = useFormik({
     initialValues: {
       number: "",
@@ -26,26 +34,27 @@ export default function LoginWithOtp() {
     },
     validationSchema: yup.object({
       number: yup
-      .string()
-      .required("Mobile Number is required")
-      .min(10, "should be 10 digits")
-      .max(10, "10 digits required"),
+        .string()
+        .required("Mobile Number is required")
+        .min(10, "should be 10 digits")
+        .max(10, "10 digits required"),
     }),
     onSubmit: async (data) => {
-      setLoading(true);
+      let userNumber = JSON.parse(sessionStorage.getItem("number"));
+      // setLoading(true);
       let values = {
         number: data?.number,
       };
-      let val = data?.password
-      if (
-        data?.password
-      ) {        
-        dispatch(loginWithOtpApi(val, navigate))
-        console.log("password", data?.password);
-      } else {
-        dispatch(getOtpApi(values))
-        console.log("number", data?.number);
-      }
+      let val = {
+        number: userNumber?.number,
+        otp: data?.password,
+      };
+
+      if (data?.password) {
+        dispatch(loginWithOtpApi(val, navigate));
+       } else {
+        dispatch(getOtpApi(values));
+       }
     },
   });
   const toggleSecureEntry = () => {
@@ -64,7 +73,7 @@ export default function LoginWithOtp() {
         padding: "10px",
       }}
     >
-      {!loading ?
+      {!loading ? (
         <Card
           sx={{
             boxShadow:
@@ -88,7 +97,6 @@ export default function LoginWithOtp() {
               helperText={formik.touched.number ? formik.errors.number : null}
               error={formik.touched.number ? formik.errors.number : null}
             />
-
           </form>
           <Typography>
             {" "}
@@ -111,7 +119,7 @@ export default function LoginWithOtp() {
             Get OTP
           </Button>
         </Card>
-        :
+      ) : (
         <Card
           sx={{
             boxShadow:
@@ -168,9 +176,7 @@ export default function LoginWithOtp() {
             Login
           </Button>
         </Card>
-      }
-
-
+      )}
     </Box>
   );
 }

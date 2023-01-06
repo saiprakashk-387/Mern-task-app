@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Button, Card, Typography } from "@mui/material";
-import { loginAPI } from "../API/AuthActions";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { setNewPaswordApi } from "../API/AuthActions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import IconButton from "@mui/material/IconButton";
@@ -13,23 +12,44 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormHelperText from "@mui/material/FormHelperText";
+// import { userLoginOtpSelector } from "../Redux/Slice";
 
-export default function Login() {
+export default function SetPasswordwithLink() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { id, token } = useParams();
+  useEffect(() => {
+    console.log("parmas", id);
+    console.log("parmas", token);
+  }, [id, token]);
+
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  // test@yopmail.com  admin@yopmail.com   123456
+  //   const [loading, setLoading] = useState(false);
+  //   const { getLoginOtp, isLoading, error } = useSelector(userLoginOtpSelector);
+  //   useEffect(() => {
+  //     if (getLoginOtp?.status === 200) {
+  //       setLoading(true);
+  //     }
+  //   }, [getLoginOtp]);
+//   console.log("newpasswodf api");
   const formik = useFormik({
     initialValues: {
-      email: "",
       password: "",
+      confirmPassword: "",
     },
     validationSchema: yup.object({
-      email: yup.string().email().required("Email is required"),
       password: yup.string().required("Password is required"),
+      confirmPassword: yup
+        .string()
+        .required("Confirm Password must be required")
+        .oneOf([yup.ref("password"), null], "Password not match"),
     }),
     onSubmit: async (data) => {
-      await dispatch(loginAPI(data, navigate));
+      let values = {
+        password: data?.password,
+      };
+      let userId = id;
+      dispatch(setNewPaswordApi(values, userId, token, navigate));
     },
   });
   const toggleSecureEntry = () => {
@@ -38,7 +58,6 @@ export default function Login() {
   const formStyle = {
     marginBottom: "10px",
   };
-
   return (
     <Box
       sx={{
@@ -57,20 +76,9 @@ export default function Login() {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          Welcome Back
+          Welcome Back - Set Password
         </Typography>
-        <form style={{ width: "35%", display: "grid", margin: "auto" }}>
-          <TextField
-            required
-            sx={formStyle}
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            helperText={formik.touched.email ? formik.errors.email : null}
-            error={formik.touched.email ? formik.errors.email : null}
-          />
+        <form style={{ width: "40%", display: "grid", margin: "auto" }}>
           <OutlinedInput
             name="password"
             sx={formStyle}
@@ -94,26 +102,52 @@ export default function Login() {
           <FormHelperText error>
             {formik.touched.password ? formik.errors.password : null}
           </FormHelperText>
+          <OutlinedInput
+            name="confirmPassword"
+            sx={formStyle}
+            placeholder="Confirm Password"
+            type={secureTextEntry ? "password" : "text"}
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.confirmPassword
+                ? formik.errors.confirmPassword
+                : null
+            }
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={toggleSecureEntry}
+                  edge="end"
+                >
+                  {secureTextEntry ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          <FormHelperText error>
+            {formik.touched.confirmPassword
+              ? formik.errors.confirmPassword
+              : null}
+          </FormHelperText>
         </form>
         <Typography>
-          {""}
-          <Link to="/forgetpassword" underline="hover">
-           Forget Password ?
+          {" "}
+          <Link to="/" underline="hover">
+            Login with Email
           </Link>
         </Typography>
         <Typography>
           {" "}
-          <Link to="/login" underline="hover">
-            Login With OTP
-          </Link>
-          {/* Not registered yet? {""} */}
-          {""} {""}   <Link to="/register" underline="hover">
+          Not registered yet? {""}
+          <Link to="/register" underline="hover">
             Create an account
           </Link>
         </Typography>
         <Button
           variant="contained"
-          sx={{ width: "30%", borderRadius: "15px" }}
+          sx={{ width: "35%", borderRadius: "15px" }}
           onClick={formik.handleSubmit}
         >
           Login

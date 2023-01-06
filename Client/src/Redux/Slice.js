@@ -5,6 +5,7 @@ const sampleSlice = createSlice({
   initialState: {
     ///auth//
     userLogin: [],
+    getLoginOtp:[],
     //admin///
     allusers: [],
     deleteUserAdmin: [],
@@ -28,6 +29,10 @@ const sampleSlice = createSlice({
     ///auth///
     UserLoginAction: (state, { payload }) => {
       state.userLogin = payload;
+      state.isLoading = false;
+    },
+    UserLoginOtpAction: (state, { payload }) => {
+      state.getLoginOtp = payload;
       state.isLoading = false;
     },
     //admin
@@ -78,6 +83,7 @@ const sampleSlice = createSlice({
 
 export const {
   UserLoginAction,
+  UserLoginOtpAction,
   //admin//
   AllUsersAdminAction,
   DeleteUserAdminAction,
@@ -95,6 +101,7 @@ export const {
 
 ///assign state to selector
 export const userLoginSelector = (state) => state.sample;
+export const userLoginOtpSelector = (state) => state.sample;
 //admin///
 export const adminUsersSelector = (state) => state.sample;
 export const adminUserDeleteSelector = (state) => state.sample;
