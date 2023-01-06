@@ -49,15 +49,16 @@ router.post("/verifyotp", async (req, res) => {
     const checkOtp = await register.findOne({ number: req.body.number });
     const verify = await bcrypt.compare(req.body.otp, checkOtp.otp);
     if (!verify) {
-      return res.json({ message: "Otp is Incorrect" }).status(400);
+      return res.status(400).json({ message: "Otp is Incorrect" });
     }
     const token = await jsonwebtoken.sign({ email: checkOtp.email }, key.key);
-    const { name, email, number } = checkOtp;
+    console.log("checkOtp",checkOtp);
+    const { name, email, number ,role} = checkOtp;
     res
       .header("auth", token)
       .json({
         token: token,
-        data: { name, email, number },
+        data: { name, email, number,role },
         message: "login successfull",
       })
       .status(200);
@@ -65,5 +66,6 @@ router.post("/verifyotp", async (req, res) => {
     console.log({ err: err });
   }
 });
+
 
 module.exports = router;
