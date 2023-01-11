@@ -34,8 +34,8 @@ export default function ForgetPassword() {
     <Box
       sx={{
         m: "auto",
-        width: "50%",
-        marginTop: "2rem",
+        width: "30%",
+        marginTop: "10rem",
         backgroundColor: "#ffffe3",
         padding: "10px",
       }}
@@ -50,7 +50,7 @@ export default function ForgetPassword() {
         <Typography variant="h4" gutterBottom>
           Welcome Back
         </Typography>
-        <form style={{ width: "40%", display: "grid", margin: "auto" }}>
+        <form style={{ width: "75%", display: "grid", margin: "auto" }}>
           <TextField
             required
             sx={formStyle}
@@ -63,19 +63,20 @@ export default function ForgetPassword() {
             error={formik.touched.email ? formik.errors.email : null}
           />
         </form>
-        <Typography>
-          {" "}
-          <Link to="/" underline="hover">
-            Login with Email
-          </Link>
-        </Typography>
-        <Typography>
-          {" "}
-          Not registered yet? {""}
-          <Link to="/register" underline="hover">
-            Create an account
-          </Link>
-        </Typography>
+        <Box sx={{ width: "75%", margin: "auto", display: "flex", justifyContent: "space-between" }}>
+          <Typography >
+            {" "}
+            <Link to="/" style={{ textDecoration: "none" }}>
+              Login with Email
+            </Link>
+          </Typography>
+          <Typography >
+            {" "}Don't have account ?
+            <Link to="/register" style={{ textDecoration: "none" }}    >
+              Sign Up
+            </Link>
+          </Typography>
+        </Box>
         <Button
           variant="contained"
           sx={{ width: "35%", borderRadius: "15px" }}

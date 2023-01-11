@@ -43,8 +43,8 @@ export default function Login() {
     <Box
       sx={{
         m: "auto",
-        width: "50%",
-        marginTop: "2rem",
+        width: "30%",
+        marginTop: "10rem",
         backgroundColor: "#ffffe3",
         padding: "10px",
       }}
@@ -56,10 +56,10 @@ export default function Login() {
           padding: "10px",
         }}
       >
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom color="primary">
           Welcome Back
         </Typography>
-        <form style={{ width: "35%", display: "grid", margin: "auto" }}>
+        <form style={{ width: "75%", display: "grid", margin: "auto" }}>
           <TextField
             required
             sx={formStyle}
@@ -95,29 +95,33 @@ export default function Login() {
             {formik.touched.password ? formik.errors.password : null}
           </FormHelperText>
         </form>
-        <Typography>
-          {""}
-          <Link to="/forgetpassword" underline="hover">
-           Forget Password ?
-          </Link>
-        </Typography>
-        <Typography>
-          {" "}
-          <Link to="/login" underline="hover">
-            Login With OTP
-          </Link>
-          {/* Not registered yet? {""} */}
-          {""} {""}   <Link to="/register" underline="hover">
-            Create an account
-          </Link>
-        </Typography>
+        <Box sx={{ width: "75%", margin: "auto", display: "flex", justifyContent: "space-between" }}>
+          <Typography>
+            {" "}
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              Login With OTP
+            </Link>
+
+          </Typography>
+          <Typography>
+            {""}
+            <Link to="/forgetpassword" style={{ textDecoration: 'none' }}>
+              Forget Password ?
+            </Link>
+          </Typography>
+        </Box>
         <Button
           variant="contained"
-          sx={{ width: "30%", borderRadius: "15px" }}
+          sx={{ width: "50%", borderRadius: "15px", marginTop: "1rem" }}
           onClick={formik.handleSubmit}
         >
           Login
         </Button>
+        <Typography sx={{ marginTop: "1rem" }}>
+          New to this site ?   <Link to="/register" style={{ textDecoration: 'none', color: "blue" }}>
+            Singn up
+          </Link>
+        </Typography>
       </Card>
     </Box>
   );

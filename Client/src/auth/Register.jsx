@@ -21,18 +21,18 @@ export default function Register() {
       name: "",
       email: "",
       password: "",
-      number:"",
+      number: "",
       confirmPassword: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       email: yup.string().email().required("Email is required"),
-      password: yup.string().required("Password is required"), 
-       number: yup
-      .string()
-      .required("Mobile Number is required")
-      .min(10, "should be 10 digits")
-      .max(10, "10 digits required"),
+      password: yup.string().required("Password is required"),
+      number: yup
+        .string()
+        .required("Mobile Number is required")
+        .min(10, "should be 10 digits")
+        .max(10, "10 digits required"),
       confirmPassword: yup
         .string()
         .required("Confirm Password must be required")
@@ -43,7 +43,7 @@ export default function Register() {
         name: data.name,
         email: data.email,
         password: data.password,
-        number:data.number,
+        number: data.number,
         role: "user",
       };
       // console.log("value", value);
@@ -60,8 +60,8 @@ export default function Register() {
     <Box
       sx={{
         m: "auto",
-        width: "50%",
-        marginTop: "2rem",
+        width: "30%",
+        marginTop: "10rem",
         backgroundColor: "#ffffe3",
         padding: "10px",
       }}
@@ -70,17 +70,17 @@ export default function Register() {
         sx={{
           boxShadow:
             "box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-          padding: "10px",
+          padding: "20  px",
         }}
       >
         <Typography
           variant="h5"
           color="primary"
-          sx={{ marginBottom: "1rem", marginTop: "0rem" }}
+          sx={{ marginBottom: "1rem", marginTop: "1rem" }}
         >
-          Create Account
+          Create your account
         </Typography>
-        <form style={{ width: "40%", display: "grid", margin: "auto" }}>
+        <form style={{ width: "50%", display: "grid", margin: "auto" }}>
           <TextField
             required
             sx={formStyle}
@@ -103,17 +103,17 @@ export default function Register() {
             helperText={formik.touched.email ? formik.errors.email : null}
             error={formik.touched.email ? formik.errors.email : null}
           />
-           <TextField
-              sx={formStyle}
-              type="number"
-              name="number"
-              InputProps={{ inputProps: { min: 0 } }}
-              placeholder="Mobile Number"
-              value={formik.values.number}
-              onChange={formik.handleChange}
-              helperText={formik.touched.number ? formik.errors.number : null}
-              error={formik.touched.number ? formik.errors.number : null}
-            />
+          <TextField
+            sx={formStyle}
+            type="number"
+            name="number"
+            InputProps={{ inputProps: { min: 0 } }}
+            placeholder="Mobile Number"
+            value={formik.values.number}
+            onChange={formik.handleChange}
+            helperText={formik.touched.number ? formik.errors.number : null}
+            error={formik.touched.number ? formik.errors.number : null}
+          />
           <OutlinedInput
             name="password"
             sx={formStyle}
@@ -161,19 +161,13 @@ export default function Register() {
               </InputAdornment>
             }
           />
-          <FormHelperText error>
+          <FormHelperText error>  
             {formik.touched.confirmPassword
               ? formik.errors.confirmPassword
               : null}
           </FormHelperText>
         </form>
-        <Typography varient="h6" sx={{ marginBottom: "1rem" }}>
-          {" "}
-          Already have an account? {""}
-          <Link to="/" underline="hover">
-            Login
-          </Link>
-        </Typography>
+
 
         <Button
           variant="contained"
@@ -182,6 +176,13 @@ export default function Register() {
         >
           SignUp
         </Button>
+        <Typography varient="h6" sx={{ marginBottom: "1rem", marginTop: "1rem" }}>
+          {" "}
+          Have an account? {""}
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            Login
+          </Link>
+        </Typography>
         {/* )} */}
       </Card>
     </Box>
