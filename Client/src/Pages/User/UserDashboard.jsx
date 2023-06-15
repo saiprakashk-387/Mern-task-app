@@ -18,6 +18,7 @@ import { parseDate } from "../../Constants";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import AddCourse from "./AddCourse";
 
 export default function UserDashboard() {
   const dispatch = useDispatch();
@@ -67,10 +68,12 @@ export default function UserDashboard() {
             <TableHead sx={{ backgroundColor: "gainsboro" }}>
               <TableRow>
                 <TableCell>S/N</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Main Category</TableCell>
+                {/* <TableCell>Name</TableCell> */}
+                <TableCell>Sub Category</TableCell>
+                {/* <TableCell>Status</TableCell> */}
                 <TableCell>Created On</TableCell>
-                <TableCell>Updated On</TableCell>
+                {/* <TableCell>Updated On</TableCell> */}
                 <TableCell>
                   Actions{" "}
                   <span>
@@ -97,9 +100,9 @@ export default function UserDashboard() {
                       <TableCell scope="row">{val.name}</TableCell>
                       <TableCell>{val.age}</TableCell>
                       <TableCell>{createdDate}</TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         {val.updatedOn ? updatedDate : createdDate}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell>
                         <Button
                           onClick={() => {
@@ -135,7 +138,8 @@ export default function UserDashboard() {
         )}
       </TableContainer>
       <UserEdit model={model} edit={edit} closeModel={closeModel} />
-      <AddUser model={addmodel} closeModel={closeModel} />
+      {/* <AddUser model={addmodel} closeModel={closeModel} /> */}
+      <AddCourse model={addmodel} closeModel={closeModel} />
       <UserDelete
         model={deletemodel}
         deleteID={deleteID}
