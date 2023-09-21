@@ -25,6 +25,7 @@ export default function UserDashboard() {
   const [model, setModel] = useState(false);
   const [addmodel, setAddModel] = useState(false);
   const [deletemodel, setDeleteModel] = useState(false);
+  const [coursemodel, setCourseModel] = useState(false);
   const [edit, setUserEdit] = useState();
   const [deleteID, setUserDeleteID] = useState();
   const { allPresons } = useSelector(userPersonsSelector);
@@ -61,90 +62,173 @@ export default function UserDashboard() {
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Typography sx={{ color: "#10e09a" }}></Typography>
-        {allPresons?.length >= 1 ? (
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead sx={{ backgroundColor: "gainsboro" }}>
-              <TableRow>
-                <TableCell>S/N</TableCell>
-                <TableCell>Main Category</TableCell>
-                {/* <TableCell>Name</TableCell> */}
-                <TableCell>Sub Category</TableCell>
-                {/* <TableCell>Status</TableCell> */}
-                <TableCell>Created On</TableCell>
-                {/* <TableCell>Updated On</TableCell> */}
-                <TableCell>
-                  Actions{" "}
-                  <span>
-                    <Button varient="outlined" onClick={addUser}>
-                      Add <AddBoxOutlinedIcon />
-                    </Button>
-                  </span>
-                </TableCell>
-              </TableRow>
-            </TableHead>
+      {coursemodel ? (
+        <>
+          <TableContainer component={Paper}>
+            <Typography sx={{ color: "#10e09a" }}></Typography>
+            {allPresons?.length >= 1 ? (
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead sx={{ backgroundColor: "gainsboro" }}>
+                  <TableRow>
+                    <TableCell>S/N</TableCell>
+                    <TableCell>Main Category</TableCell>
+                    <TableCell>Sub Category</TableCell>
+                    <TableCell>Created On</TableCell>
+                    <TableCell>
+                      Actions{" "}
+                      <span>
+                        <Button varient="outlined" onClick={addUser}>
+                          Add <AddBoxOutlinedIcon />
+                        </Button>
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
 
-            <TableBody>
-              {
-                allPresons?.map((val, index) => {
-                  let createdDate = parseDate(val.createdAt);
-                  let updatedDate = parseDate(val.updatedOn);
-                  console.log("val.updatedOn", val.updatedOn);
-                  return (
-                    <TableRow
-                      key={index}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell scope="row">{index + 1}</TableCell>
-                      <TableCell scope="row">{val.name}</TableCell>
-                      <TableCell>{val.age}</TableCell>
-                      <TableCell>{createdDate}</TableCell>
-                      {/* <TableCell>
-                        {val.updatedOn ? updatedDate : createdDate}
-                      </TableCell> */}
-                      <TableCell>
-                        <Button
-                          onClick={() => {
-                            editUserDetils(val);
+                <TableBody>
+                  {
+                    allPresons?.map((val, index) => {
+                      let createdDate = parseDate(val.createdAt);
+                      let updatedDate = parseDate(val.updatedOn);
+                      return (
+                        <TableRow
+                          key={index}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <BorderColorOutlinedIcon />
+                          <TableCell scope="row">{index + 1}</TableCell>
+                          <TableCell scope="row">{val.name}</TableCell>
+                          <TableCell>{val.age}</TableCell>
+                          <TableCell>{createdDate}</TableCell>
+                          <TableCell>
+                            <Button
+                              onClick={() => {
+                                editUserDetils(val);
+                              }}
+                            >
+                              <BorderColorOutlinedIcon />
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                userDeleteDetils(val);
+                              }}
+                            >
+                              <DeleteOutlinedIcon color="red" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                    // .reverse()
+                  }
+                </TableBody>
+              </Table>
+            ) : (
+              <Box>
+                <Typography>
+                  {`No Data Found`}
+                  <Button varient="outlined" onClick={addUser}>
+                    Add +
+                  </Button>
+                </Typography>
+              </Box>
+            )}
+          </TableContainer>
+          <UserEdit model={model} edit={edit} closeModel={closeModel} />
+          <AddCourse model={addmodel} closeModel={closeModel} />
+          <UserDelete
+            model={deletemodel}
+            deleteID={deleteID}
+            closeModel={closeModel}
+          />
+        </>
+      ) : (
+        <>
+          <TableContainer component={Paper}>
+            <Typography sx={{ color: "#10e09a" }}></Typography>
+            {allPresons?.length >= 1 ? (
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead sx={{ backgroundColor: "gainsboro" }}>
+                  <TableRow>
+                    <TableCell>S/N</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Created On</TableCell>
+                    <TableCell>Updated On</TableCell>
+                    <TableCell>
+                      Actions{" "}
+                      <span>
+                        <Button varient="outlined" onClick={addUser}>
+                          Add <AddBoxOutlinedIcon />
                         </Button>
-                        <Button
-                          onClick={() => {
-                            userDeleteDetils(val);
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {
+                    allPresons?.map((val, index) => {
+                      let createdDate = parseDate(val.createdAt);
+                      let updatedDate = parseDate(val.updatedOn);
+                      return (
+                        <TableRow
+                          key={index}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <DeleteOutlinedIcon color="red" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-                // .reverse()
-              }
-            </TableBody>
-          </Table>
-        ) : (
-          <Box>
-            <Typography>
-              {`No Data Found`}
-              <Button varient="outlined" onClick={addUser}>
-                Add +
-              </Button>
-            </Typography>
-          </Box>
-        )}
-      </TableContainer>
-      <UserEdit model={model} edit={edit} closeModel={closeModel} />
-      {/* <AddUser model={addmodel} closeModel={closeModel} /> */}
-      <AddCourse model={addmodel} closeModel={closeModel} />
-      <UserDelete
-        model={deletemodel}
-        deleteID={deleteID}
-        closeModel={closeModel}
-      />
+                          <TableCell scope="row">{index + 1}</TableCell>
+                          <TableCell scope="row">{val.name}</TableCell>
+                          <TableCell>{val.age}</TableCell>
+                          <TableCell>{createdDate}</TableCell>
+                          <TableCell>
+                          {val.updatedOn ? updatedDate : createdDate}
+                        </TableCell>
+                          <TableCell>
+                            <Button
+                              onClick={() => {
+                                editUserDetils(val);
+                              }}
+                            >
+                              <BorderColorOutlinedIcon />
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                userDeleteDetils(val);
+                              }}
+                            >
+                              <DeleteOutlinedIcon color="red" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                    // .reverse()
+                  }
+                </TableBody>
+              </Table>
+            ) : (
+              <Box>
+                <Typography>
+                  {`No Data Found`}
+                  <Button varient="outlined" onClick={addUser}>
+                    Add +
+                  </Button>
+                </Typography>
+              </Box>
+            )}
+          </TableContainer>
+          <UserEdit model={model} edit={edit} closeModel={closeModel} />
+          <AddUser model={addmodel} closeModel={closeModel} />
+          <UserDelete
+            model={deletemodel}
+            deleteID={deleteID}
+            closeModel={closeModel}
+          />
+        </>
+      )}
     </>
   );
 }

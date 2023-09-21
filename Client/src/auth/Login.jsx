@@ -18,7 +18,7 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  // test@yopmail.com  admin@yopmail.com   123456
+  // test@yopmail.com  admin@yopmail.com karthi@yopmail.com   123456
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -45,7 +45,7 @@ export default function Login() {
         m: "auto",
         width: "30%",
         marginTop: "10rem",
-        backgroundColor: "#ffffe3",
+        backgroundColor: "Highlight",
         padding: "10px",
       }}
     >
@@ -95,17 +95,23 @@ export default function Login() {
             {formik.touched.password ? formik.errors.password : null}
           </FormHelperText>
         </form>
-        <Box sx={{ width: "75%", margin: "auto", display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            width: "75%",
+            margin: "auto",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography>
             {" "}
-            <Link to="/login" style={{ textDecoration: 'none' }}>
+            <Link to="/login" style={{ textDecoration: "none" }}>
               Login With OTP
             </Link>
-
           </Typography>
           <Typography>
             {""}
-            <Link to="/forgetpassword" style={{ textDecoration: 'none' }}>
+            <Link to="/forgetpassword" style={{ textDecoration: "none" }}>
               Forget Password ?
             </Link>
           </Typography>
@@ -118,7 +124,11 @@ export default function Login() {
           Login
         </Button>
         <Typography sx={{ marginTop: "1rem" }}>
-          New to this site ?   <Link to="/register" style={{ textDecoration: 'none', color: "blue" }}>
+          New to this site ?{" "}
+          <Link
+            to="/register"
+            style={{ textDecoration: "none", color: "blue" }}
+          >
             Singn up
           </Link>
         </Typography>

@@ -17,6 +17,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import moment from 'moment';
+import { userApplogin, userApplogout } from "../API/UserActions";
+import { useDispatch, useSelector } from "react-redux";
+import { UserAppLoginnSelector } from "../Redux/Slice";
 
 const drawerWidth = 240;
 
@@ -66,15 +70,21 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function Layout() {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [role, setRole] = useState();
   const [info, setInfo] = useState();
+const [clockIn,setClockIn]=useState()
+const [logId,setLoginId]=useState()
+const { userAppLoginn } = useSelector(UserAppLoginnSelector);
 
   useEffect(() => {
     setRole(sessionStorage.getItem("role"));
+    setLoginId(sessionStorage.getItem("logid"));
     setInfo(JSON.parse(sessionStorage.getItem("userdata")));
-  }, []);
+    setClockIn(sessionStorage.getItem("loginStatus"))
+  }, [userAppLoginn]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,6 +114,10 @@ export default function Layout() {
       name: "Profile",
       path: "/profile",
     },
+    {
+      name: "Attendence",
+      path: "/attencence",
+    },
   ];
   const userList = [
     {
@@ -118,10 +132,32 @@ export default function Layout() {
       name: "Profile",
       path: "/profile",
     },
+    {
+      name: "My-Attendence",
+      path: "/attendence",
+    },
   ];
   const getRoute = (text) => {
     navigate(text.path);
   };
+  const clockInprop=()=>{
+    let data={
+      inTime:moment().format('L,LTS',"HH:mm:ss a"),
+      outTime:""
+    };
+    dispatch(userApplogin(data))
+    // setClockIn(true)   
+  }
+ 
+  const clockOutprop=()=>{
+    let id = logId
+    let data={
+      outTime:moment().format('L,LTS',"HH:mm:ss a")
+    };
+    dispatch(userApplogout(data,id))
+    // setClockIn(false)
+    localStorage.clear();
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -155,12 +191,21 @@ export default function Layout() {
           >
             MERN
           </Typography>
-          <Button
-            onClick={sessionOut}
-            sx={{ color: "aliceblue", margin: "auto" }}
+          {
+            clockIn === "Active"? <Button
+            onClick={clockOutprop}
+            sx={{ color: "aliceblue",backgroundColor:"gray", margin: "auto" }}
           >
-            Logout
-          </Button>
+            Clock-Out
+          </Button>:
+           <Button
+           onClick={ clockInprop}
+           sx={{ color: "aliceblue",backgroundColor:"gray", margin: "auto" }}
+         >
+           Clock-In
+         </Button>
+          }
+         
         </Toolbar>
       </AppBar>
 
@@ -215,6 +260,12 @@ export default function Layout() {
                   </ListItemButton>
                 </ListItem>
               ))}
+               <Button
+            onClick={sessionOut}
+            sx={{ color: "secondary", margin: "auto" }}
+          >
+            Logout
+          </Button>
         </List>
       </Drawer>
       <Main open={open}>

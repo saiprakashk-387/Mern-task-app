@@ -13,6 +13,7 @@ import Profile from "../Pages/Profile";
 import LoginWithOtp from "../auth/LoginWithOtp";
 import ForgetPassword from "../auth/ForgetPassword";
 import SetPasswordwithLink from "../auth/SetPasswordwithLink";
+import Attendence from "../Pages/User/Attendence";
 
 const MainRoute = () => {
   const { userLogin, isLoading, error } = useSelector(userLoginSelector);
@@ -25,7 +26,7 @@ const MainRoute = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" exact element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/Login" element={<LoginWithOtp />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
@@ -36,6 +37,7 @@ const MainRoute = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/myprofile" element={<UserProfile />} />
+          <Route path="/attendence" element={<Attendence />} />
         </Route>
       </Routes>
     </div>

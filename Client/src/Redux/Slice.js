@@ -17,6 +17,8 @@ const sampleSlice = createSlice({
     adduser: [],
     userUpdate: [],
     deleteUser: [],
+    userAppLoginn:[],
+    attendenceLog:[],
     ///image upload
     cloudImage: [],
     error: false,
@@ -73,6 +75,14 @@ const sampleSlice = createSlice({
       state.deleteUser = payload;
       state.isLoading = false;
     },
+    UserAppLoginnAction: (state, { payload }) => {
+      state.userAppLoginn = payload;
+      state.isLoading = false;
+    },
+    AttendenceLogAction: (state, { payload }) => {
+      state.attendenceLog = payload;
+      state.isLoading = false;
+    },
     ///image  upload
     profileImageAction: (state, { payload }) => {
       state.cloudImage = payload;
@@ -95,6 +105,8 @@ export const {
   AddUserAction,
   UserUpdateAction,
   UserDeleteAction,
+  UserAppLoginnAction,
+  AttendenceLogAction,
   ///image upload//
   profileImageAction,
 } = sampleSlice.actions;
@@ -113,6 +125,8 @@ export const userPersonsSelector = (state) => state.sample;
 export const addUserSelector = (state) => state.sample;
 export const userUpdateSelector = (state) => state.sample;
 export const userDeleteSelector = (state) => state.sample;
+export const UserAppLoginnSelector = (state) => state.sample;
+export const AttendenceLogSelector = (state) => state.sample;
 ///imageupload
 export const profileImageSelector = (state) => state.sample;
 

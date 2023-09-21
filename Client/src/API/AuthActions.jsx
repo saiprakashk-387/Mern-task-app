@@ -25,6 +25,7 @@ export const loginAPI = (values, navigate) => {
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("userdata", JSON.stringify(res.data.data));
           sessionStorage.setItem("role", res.data.data.role);
+          sessionStorage.setItem("userEmail", res.data.data.email);
         }
         if (res.data.data.role === "admin") {
           navigate("/admindashboard");
