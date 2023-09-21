@@ -36,6 +36,7 @@ app.use(require("./Routes/RegisterRoute"));
 app.use(require('./Routes/LoginRoute'));
 app.use(require('./Routes/OtpRoute'));
 app.use(require('./Routes/ForgetPasswordRoute'));
+app.use(require('./Routes/SessionRoute'));
 
  
 const url =process.env.CONNECTION_URL;
