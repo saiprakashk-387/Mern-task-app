@@ -166,6 +166,7 @@ export const userApplogout = (data, id) => {
       })
       .then((res) => {
         if (res?.status === 200) {
+          dispatch(UserAppLoginnAction(res));
           dispatch(userAttendenceLog(email));
           sessionStorage.setItem("loginStatus", "InActive");
         }

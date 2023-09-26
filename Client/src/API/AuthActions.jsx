@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { UserLoginAction, UserLoginOtpAction } from "../Redux/Slice";
 import { base_url } from "./Config";
 
@@ -7,12 +9,12 @@ export const registerAPI = (values, navigate) => {
     .post(base_url + "/register", values)
     .then((res) => {
       if (res.status === 200) {
-        alert("Registration Successfull");
+        toast.success("Registration Successfull");
         navigate("/");
       }
     })
     .catch((err) => {
-      alert(err.response.data);
+      toast.error(`${err.response.data.message}`);
     });
 };
 export const loginAPI = (values, navigate) => {
@@ -26,6 +28,7 @@ export const loginAPI = (values, navigate) => {
           sessionStorage.setItem("userdata", JSON.stringify(res.data.data));
           sessionStorage.setItem("role", res.data.data.role);
           sessionStorage.setItem("userEmail", res.data.data.email);
+          toast.success("Login Succesfully");
         }
         if (res.data.data.role === "admin") {
           navigate("/admindashboard");
@@ -34,7 +37,8 @@ export const loginAPI = (values, navigate) => {
         }
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        dispatch(UserLoginAction(err));
+        toast.error(`${err.response.data.message}`);
       });
   };
 };
@@ -47,12 +51,12 @@ export const getOtpApi = (values) => {
         if (res.status === 200) {
           dispatch(UserLoginOtpAction(res));
           sessionStorage.setItem("number", JSON.stringify(values));
-          alert(res.data.message);
+          toast.success(`${res.data.message}`);
         }
       })
       .catch((err) => {
         dispatch(UserLoginOtpAction(err.response));
-        alert(err.response.data.message);
+        toast.error(`${err.response.data.message}`);
       });
   };
 };
@@ -62,12 +66,10 @@ export const loginWithOtpApi = (val, navigate) => {
       .post(base_url + "/verifyotp", val)
       .then((res) => {
         if (res.status === 200) {
-          // console.log("otpkligo",res.data.data);
-          alert(res?.data?.message);
+          toast.success(`${res.data.message}`);
           sessionStorage.setItem("userdata", JSON.stringify(res?.data?.data));
           sessionStorage.setItem("token", res?.data?.token);
           sessionStorage.setItem("role", res.data.data.role);
-          // navigate("/home");
           sessionStorage.removeItem("number");
         }
         if (res.data.data.role === "admin") {
@@ -77,7 +79,7 @@ export const loginWithOtpApi = (val, navigate) => {
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        toast.error(`${err.response.data.message}`);
       });
   };
 };
@@ -90,13 +92,12 @@ export const requestForgetPassword = (data) => {
           console.log("res", res);
           // dispatch(UserLoginOtpAction(res));
           //  sessionStorage.setItem("number", JSON.stringify(res));
-          alert(res.data.message);
+          toast.success(`${res.data.message}`);
         }
       })
       .catch((err) => {
-        console.log("err.response", err.response);
         //  dispatch(UserLoginOtpAction(err.response));
-        alert(err.response.data.message);
+        toast.error(`${err.response.data.message}`);
       });
   };
 };
@@ -107,8 +108,7 @@ export const setNewPaswordApi = (values, userId, token, navigate) => {
       .post(base_url + `/resetpassword/${userId}/${token}`, values)
       .then((res) => {
         if (res.status === 200) {
-          console.log("otpkligo", res.data);
-          alert(res.data);
+          toast.success(`${res.data.message}`);
           navigate("/");
           // sessionStorage.setItem("userdata", JSON.stringify(res?.data?.data));
           // sessionStorage.setItem("token", res?.data?.token);
@@ -121,8 +121,7 @@ export const setNewPaswordApi = (values, userId, token, navigate) => {
         // }
       })
       .catch((err) => {
-        alert(err?.response.data);
-        // console.log("err", err?.response.data);
+        toast.error(`${err.response.data.message}`);
       });
   };
 };
