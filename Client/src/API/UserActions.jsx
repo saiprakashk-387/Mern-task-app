@@ -145,6 +145,7 @@ export const userApplogin = (data) => {
           dispatch(userAttendenceLog(email));
           sessionStorage.setItem("loginStatus", "Active");
           sessionStorage.setItem("logid", res?.data?._id);
+          sessionStorage.setItem("login_at", data?.inTime);
         }
       })
       .catch((err) => {
@@ -169,6 +170,7 @@ export const userApplogout = (data, id) => {
           dispatch(UserAppLoginnAction(res));
           dispatch(userAttendenceLog(email));
           sessionStorage.setItem("loginStatus", "InActive");
+          sessionStorage.setItem("AttendenceStatus", "Marked");
         }
       })
       .catch((err) => {

@@ -30,41 +30,57 @@ const Attendence = () => {
   };
   return (
     <TableContainer component={Paper}>
-      {
-         attendenceLog?.data?.data.length >= 1? 
-         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-         <TableHead sx={{ backgroundColor: "gainsboro" }}>
-           <TableRow>
-             <TableCell>S/N</TableCell>
-             <TableCell>Date</TableCell>
-             <TableCell>In Time</TableCell>
-             <TableCell>Out Time</TableCell>
-             <TableCell>Duration(Hrs)</TableCell>
-             <TableCell>Actions</TableCell>
-           </TableRow>
-         </TableHead>
-         <TableBody>
-           {attendenceLog?.data?.data?.map((val, i) => {
-               return (
-                 <TableRow key={i}>
-                   <TableCell>{i+1}</TableCell>
-                   <TableCell>{val?.inTime?val?.inTime.split(",")[0]:"-"}</TableCell>
-                   <TableCell>{val?.inTime?val?.inTime.split(",")[1]:"-"}</TableCell>
-                   <TableCell>{val?.outTime?val?.outTime.split(",")[1]:"-"}</TableCell>
-                   <TableCell>{ val?.outTime? getloginDuration(val?.inTime,val?.outTime):"-"}</TableCell>
-                   <TableCell>
-                     <Button>
-                       <BorderColorOutlinedIcon />
-                     </Button>
-                   </TableCell>
-                 </TableRow>
-               );
-             })}
-         </TableBody>
-       </Table> :
-         <Typography sx={{ color: "#10e09a" }}>{ "No Data Found"}</Typography>      
-      }
-    
+      {attendenceLog?.data?.data.length >= 1 ? (
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead sx={{ backgroundColor: "gainsboro" }}>
+            <TableRow>
+              <TableCell>S/N</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>In Time</TableCell>
+              <TableCell>Out Time</TableCell>
+              <TableCell>Duration(Hrs)</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {attendenceLog?.data?.data?.map((val, i) => {
+              let date = moment(`${val.inTime.split(",")[0]}`).format(
+                "DD/MM/YYYY"
+              );
+              return (
+                <TableRow key={i}>
+                  <TableCell>{i + 1}</TableCell>
+                  <TableCell>{val?.inTime ? date : "-"}</TableCell>
+                  <TableCell>
+                    {getloginDuration(val?.inTime, val?.outTime) >= 9
+                      ? "Present"
+                      : "Absent"}
+                  </TableCell>
+                  <TableCell>
+                    {val?.inTime ? val?.inTime.split(",")[1] : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {val?.outTime ? val?.outTime.split(",")[1] : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {val?.outTime
+                      ? getloginDuration(val?.inTime, val?.outTime)
+                      : "-"}
+                  </TableCell>
+                  <TableCell>
+                    <Button>
+                      <BorderColorOutlinedIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      ) : (
+        <Typography sx={{ color: "#10e09a" }}>{"No Data Found"}</Typography>
+      )}
     </TableContainer>
   );
 };

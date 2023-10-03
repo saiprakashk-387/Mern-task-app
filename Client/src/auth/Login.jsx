@@ -165,7 +165,7 @@ export default function Login() {
               to="/register"
               style={{ textDecoration: "none", color: "blue" }}
             >
-              Singn up
+              Sign up
             </Link>
           </Typography>
         </form>
