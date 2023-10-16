@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   AllUsersAdminAction,
+  AttendenceRequestAction,
   DeleteUserAdminAction,
   myProfileAction,
   profileImageAction,
@@ -133,5 +134,48 @@ export const uploadImage = (image) => {
         dispatch(profileImageAction(data));
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const getAttendenceRequests = () => {
+  return (dispatch) => {
+    axios
+      .get(base_url + `/getAllRequest`, {
+        headers: {
+          "content-Type": "application/json",
+          Authorization: ACCESS_TOKEN()
+            ? `Bearer ${ACCESS_TOKEN()}`
+            : undefined,
+        },
+      })
+      .then((res) => {
+        dispatch(AttendenceRequestAction(res.data));
+      })
+      .catch((err) => {
+        dispatch(AttendenceRequestAction(err));
+      });
+  };
+};
+
+export const getAttendenceApproval = (data) => {
+  return (dispatch) => {
+    axios
+      .put(base_url + `/reguarize-requestapproval`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: ACCESS_TOKEN()
+            ? `Bearer ${ACCESS_TOKEN()}`
+            : undefined,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Request Updated Successully");
+          dispatch(getAttendenceRequests());
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   };
 };

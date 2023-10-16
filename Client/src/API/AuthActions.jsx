@@ -38,6 +38,9 @@ export const loginAPI = (values, navigate) => {
       })
       .catch((err) => {
         dispatch(UserLoginAction(err));
+        if (err.code == "ERR_NETWORK") {
+          toast.error(`${err.message}`);
+        }
         toast.error(`${err.response.data.message}`);
       });
   };

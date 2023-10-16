@@ -104,7 +104,7 @@ const Stopwatch = (props) => {
     setIsHovering(false);
   };
   const getloginDuration = () => {
-    let val = "10/03/2023,10:16:06 AM";
+    let val = userLogTime;
     let val1 = moment().format("L,LTS", "HH:mm:ss a");
     let inTime = moment(val?.split(",")[1], "HH:mm:ss a");
     let outTime = moment(val1?.split(",")[1], "HH:mm:ss a");

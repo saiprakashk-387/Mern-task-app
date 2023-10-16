@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,10 +12,13 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { userAttendenceLog } from "../../API/UserActions";
 import { AttendenceLogSelector } from "../../Redux/Slice";
+import AttendenceRegularize from "./AttendenceRegularize";
 
 const Attendence = () => {
   const dispatch = useDispatch();
   const { attendenceLog } = useSelector(AttendenceLogSelector);
+  const [model, setModel] = useState(false);
+  const [attendenceInfo, setAttendenceInfo] = useState();
   useEffect(() => {
     let email = sessionStorage.getItem("userEmail");
     dispatch(userAttendenceLog(email));
@@ -28,60 +31,90 @@ const Attendence = () => {
     var sec = moment.utc(outTime.diff(inTime)).format("ss");
     return [hrs, min, sec].join(":");
   };
+  const regularizeAttendence = (val) => {
+    setModel(true);
+    setAttendenceInfo(val);
+  };
+  const closeModel = () => {
+    setModel(false);
+  };
   return (
-    <TableContainer component={Paper}>
-      {attendenceLog?.data?.data.length >= 1 ? (
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: "gainsboro" }}>
-            <TableRow>
-              <TableCell>S/N</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>In Time</TableCell>
-              <TableCell>Out Time</TableCell>
-              <TableCell>Duration(Hrs)</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {attendenceLog?.data?.data?.map((val, i) => {
-              let date = moment(`${val.inTime.split(",")[0]}`).format(
-                "DD/MM/YYYY"
-              );
-              return (
-                <TableRow key={i}>
-                  <TableCell>{i + 1}</TableCell>
-                  <TableCell>{val?.inTime ? date : "-"}</TableCell>
-                  <TableCell>
-                    {getloginDuration(val?.inTime, val?.outTime) >= 9
-                      ? "Present"
-                      : "Absent"}
-                  </TableCell>
-                  <TableCell>
-                    {val?.inTime ? val?.inTime.split(",")[1] : "-"}
-                  </TableCell>
-                  <TableCell>
-                    {val?.outTime ? val?.outTime.split(",")[1] : "-"}
-                  </TableCell>
-                  <TableCell>
-                    {val?.outTime
-                      ? getloginDuration(val?.inTime, val?.outTime)
-                      : "-"}
-                  </TableCell>
-                  <TableCell>
-                    <Button>
-                      <BorderColorOutlinedIcon />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      ) : (
-        <Typography sx={{ color: "#10e09a" }}>{"No Data Found"}</Typography>
-      )}
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        {attendenceLog?.data?.data.length >= 1 ? (
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead sx={{ backgroundColor: "gainsboro" }}>
+              <TableRow>
+                <TableCell>S/N</TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>In Time</TableCell>
+                <TableCell>Out Time</TableCell>
+                <TableCell>Duration(Hrs)</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {attendenceLog?.data?.data?.map((val, i) => {
+                let date = moment(`${val.inTime.split(",")[0]}`).format(
+                  "DD/MM/YYYY"
+                );
+                let cellColor = val.status
+                  ? "blue"
+                  : getloginDuration(val?.inTime, val?.outTime) >= "09:00:00"
+                  ? "green"
+                  : "red";
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{i + 1}</TableCell>
+                    <TableCell>{val?.inTime ? date : "-"}</TableCell>
+                    <TableCell style={{ color: `${cellColor}` }}>
+                      {val?.status
+                        ? val.status
+                        : getloginDuration(val?.inTime, val?.outTime) >=
+                          "09:00:00"
+                        ? "Present"
+                        : "Absent"}
+                    </TableCell>
+                    <TableCell>
+                      {val?.inTime ? val?.inTime.split(",")[1] : "-"}
+                    </TableCell>
+                    <TableCell>
+                      {val?.outTime ? val?.outTime.split(",")[1] : "-"}
+                    </TableCell>
+                    <TableCell>
+                      {val?.status ? (
+                        <span>Approved</span>
+                      ) : val?.outTime ? (
+                        getloginDuration(val?.inTime, val?.outTime)
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => {
+                          regularizeAttendence(val);
+                        }}
+                      >
+                        <BorderColorOutlinedIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        ) : (
+          <Typography sx={{ color: "#10e09a" }}>{"No Data Found"}</Typography>
+        )}
+      </TableContainer>
+      <AttendenceRegularize
+        model={model}
+        attendenceInfo={attendenceInfo}
+        closeModel={closeModel}
+      />
+    </>
   );
 };
 

@@ -37,8 +37,7 @@ export default function Profile() {
     setProfileInfo(JSON.parse(sessionStorage.getItem("userdata")));
   }, [status]);
   // const _id = "63515040bcb3a8f99a12ad8c";
-  const _id = profileInfo?._id
-  ;
+  const _id = profileInfo?._id;
   useEffect(() => {
     dispatch(getProfileInfo(_id));
     setProfileInfo(JSON.parse(sessionStorage.getItem("userdata")));
@@ -85,9 +84,9 @@ export default function Profile() {
       address: profileInfo?.address,
       name: profileInfo?.name,
       number: profileInfo?.number,
-      // profile_url: image,
+      profile_url: image,
     };
-    console.log("data",data);
+    console.log("data", data);
     await dispatch(updateProfileApi(id, data, navigateto, navigate));
   };
   const Input = styled("input")({
@@ -150,7 +149,7 @@ export default function Profile() {
           handleInput(e);
         }}
       />
-      {/* <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2}>
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -188,7 +187,7 @@ export default function Profile() {
             />
           )}
         </Badge>
-      </Stack>{" "} */}
+      </Stack>{" "}
       <br />
       <Button
         onClick={() => {

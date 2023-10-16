@@ -7,13 +7,14 @@ import Register from "../auth/Register";
 import { userLoginSelector } from "../Redux/Slice";
 import UserDashboard from "../Pages/User/UserDashboard";
 import Layout from "../Layout/Layout";
- import AboutPage from "../Pages/User/AboutPage";
+import AboutPage from "../Pages/User/AboutPage";
 import UserProfile from "../Pages/User/UserProfile";
 import Profile from "../Pages/Profile";
 import LoginWithOtp from "../auth/LoginWithOtp";
 import ForgetPassword from "../auth/ForgetPassword";
 import SetPasswordwithLink from "../auth/SetPasswordwithLink";
 import Attendence from "../Pages/User/Attendence";
+import AttendenceApprove from "../Pages/Admin/AttendenceApprove";
 
 const MainRoute = () => {
   const { userLogin, isLoading, error } = useSelector(userLoginSelector);
@@ -30,7 +31,10 @@ const MainRoute = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/Login" element={<LoginWithOtp />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/forgetpassword/:id/:token" element={<SetPasswordwithLink />} />
+        <Route
+          path="/forgetpassword/:id/:token"
+          element={<SetPasswordwithLink />}
+        />
         <Route element={<Layout />}>
           <Route path="/home" element={<UserDashboard />} />
           <Route path="/admindashboard" element={<Dashboard />} />
@@ -38,6 +42,7 @@ const MainRoute = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/myprofile" element={<UserProfile />} />
           <Route path="/attendence" element={<Attendence />} />
+          <Route path="/attendence-request" element={<AttendenceApprove />} />
         </Route>
       </Routes>
     </div>

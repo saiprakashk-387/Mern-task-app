@@ -5,20 +5,21 @@ const sampleSlice = createSlice({
   initialState: {
     ///auth//
     userLogin: [],
-    getLoginOtp:[],
+    getLoginOtp: [],
     //admin///
     allusers: [],
     deleteUserAdmin: [],
     myProfile: [],
     profileUpdate: [],
     userSubList: [],
+    attendenceRequest: [],
     ///user//
     allPresons: [],
     adduser: [],
     userUpdate: [],
     deleteUser: [],
-    userAppLoginn:[],
-    attendenceLog:[],
+    userAppLoginn: [],
+    attendenceLog: [],
     ///image upload
     cloudImage: [],
     error: false,
@@ -56,6 +57,10 @@ const sampleSlice = createSlice({
     },
     UserSubListAction: (state, { payload }) => {
       state.userSubList = payload;
+      state.isLoading = false;
+    },
+    AttendenceRequestAction: (state, { payload }) => {
+      state.attendenceRequest = payload;
       state.isLoading = false;
     },
     ///user///
@@ -100,6 +105,7 @@ export const {
   myProfileAction,
   profileUpdateAction,
   UserSubListAction,
+  AttendenceRequestAction,
   //user///
   AllPersonsAction,
   AddUserAction,
@@ -120,6 +126,7 @@ export const adminUserDeleteSelector = (state) => state.sample;
 export const profileSelector = (state) => state.sample;
 export const profileUpdateSelector = (state) => state.sample;
 export const userSubListSelector = (state) => state.sample;
+export const attendenceRequestSelector = (state) => state.sample;
 //user//
 export const userPersonsSelector = (state) => state.sample;
 export const addUserSelector = (state) => state.sample;

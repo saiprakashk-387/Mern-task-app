@@ -61,7 +61,6 @@ export const singleUSerUpdate = (id, dataa) => {
         },
       })
       .then((res) => {
-        console.log("rers", res);
         dispatch(UserUpdateAction(res));
       })
       .catch((err) => {
@@ -171,6 +170,27 @@ export const userApplogout = (data, id) => {
           dispatch(userAttendenceLog(email));
           sessionStorage.setItem("loginStatus", "InActive");
           sessionStorage.setItem("AttendenceStatus", "Marked");
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+};
+export const userAttendenceRegularize = (user_Info) => {
+  return (dispatch) => {
+    axios
+      .put(base_url + `/reguarize-request`, user_Info, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: ACCESS_TOKEN()
+            ? `Bearer ${ACCESS_TOKEN()}`
+            : undefined,
+        },
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          dispatch(userAttendenceLog());
         }
       })
       .catch((err) => {

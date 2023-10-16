@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -109,9 +109,13 @@ export default function Layout() {
       name: "Profile",
       path: "/profile",
     },
+    // {
+    //   name: "Attendence",
+    //   path: "/attencence",
+    // },
     {
-      name: "Attendence",
-      path: "/attencence",
+      name: "Requests",
+      path: "/attendence-request",
     },
   ];
   const userList = [
@@ -135,6 +139,14 @@ export default function Layout() {
   const getRoute = (text) => {
     navigate(text.path);
   };
+  const greetingsText = useMemo(() => {
+    const hourNow = new Date().getHours();
+    return hourNow < 12
+      ? "Good Morning"
+      : hourNow < 17
+      ? "Good Afternoon"
+      : "Good Evening";
+  }, []);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -158,7 +170,8 @@ export default function Layout() {
             Welcome {""}
             <Link to={`/profile`} state={role} sx={{ color: "cornsilk" }}>
               {getUserName(info?.name)}
-            </Link>
+            </Link>{" "}
+            {greetingsText}
           </Typography>
           <Typography
             variant="h6"

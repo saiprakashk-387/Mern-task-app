@@ -23,12 +23,14 @@ export default function Login() {
   const { userLogin, isLoading } = useSelector(userLoginSelector);
 
   // test@yopmail.com  admin@yopmail.com karthi@yopmail.com   123456
-
   useEffect(() => {
     if (userLogin?.response?.status !== 200) {
       setLoading(false);
     }
-  }, [userLogin?.response]);
+    if (userLogin?.code === "ERR_NETWORK") {
+      setLoading(false);
+    }
+  }, [userLogin?.response, userLogin]);
 
   const formik = useFormik({
     initialValues: {
